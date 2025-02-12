@@ -12,7 +12,13 @@ const LoadDB = async () => {
 LoadDB();
 
 export async function GET(request) {
-    const blogs = await BlogModel.find({});
+    const blogId = request.nextUrl.searchParams.get("id");
+    var blogs = [];
+    if(blogId) {
+        blogs = await BlogModel.findById(blogId);
+    } else {
+        blogs = await BlogModel.find({});
+    }
     return NextResponse.json(blogs)
 }
 
